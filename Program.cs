@@ -136,5 +136,17 @@ app.MapGet("/employees", () =>
     });
 });
 
+app.MapGet("/employees/{id}", (int id) => 
+{
+    Employee employee = employees.FirstOrDefault(employee => employee.Id == id);
+
+    return new EmployeeDTO
+    {
+        Id = employee.Id,
+        Name = employee.Name,
+        Specialty = employee.Specialty
+    };
+});
+
 app.Run();
 
