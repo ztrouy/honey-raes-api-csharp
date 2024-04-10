@@ -158,5 +158,17 @@ app.MapGet("/customers", () =>
     });
 });
 
+app.MapGet("/customers/{id}", (int id) =>
+{
+    Customer customer = customers.FirstOrDefault(customer => customer.Id == id);
+
+    return new CustomerDTO
+    {
+        Id = customer.Id,
+        Name = customer.Name,
+        Address = customer.Address
+    };
+});
+
 app.Run();
 
