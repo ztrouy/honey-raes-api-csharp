@@ -126,5 +126,15 @@ app.MapGet("/servicetickets/{id}", (int id) =>
     };
 });
 
+app.MapGet("/employees", () => 
+{
+    return employees.Select(employee => new EmployeeDTO
+    {
+        Id = employee.Id,
+        Name = employee.Name,
+        Specialty = employee.Specialty
+    });
+});
+
 app.Run();
 
