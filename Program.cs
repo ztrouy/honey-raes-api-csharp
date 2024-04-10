@@ -98,7 +98,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.MapGet("/servicetickets", () =>
+{
+    return serviceTickets.Select(ticket => new ServiceTicketDTO
+    {
+        Id = ticket.Id,
+        CustomerId = ticket.CustomerId,
+        EmployeeId = ticket.EmployeeId,
+        Description = ticket.Description,
+        Emergency = ticket.Emergency,
+        DateCompleted = ticket.DateCompleted
+    });
+});
 
 app.Run();
 
