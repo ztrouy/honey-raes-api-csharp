@@ -148,5 +148,15 @@ app.MapGet("/employees/{id}", (int id) =>
     };
 });
 
+app.MapGet("/customers", () => 
+{
+    return customers.Select(customer => new CustomerDTO
+    {
+        Id = customer.Id,
+        Name = customer.Name,
+        Address = customer.Address
+    });
+});
+
 app.Run();
 
