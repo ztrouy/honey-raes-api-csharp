@@ -1,6 +1,6 @@
-namespace HoneyRaesApi.Models.DTOs;
+namespace HoneyRaesAPI.Models.DTOs;
 
-public class EmployeeDTO()
+public class EmployeeDTO
 {
     public int Id {get; set;}
     public string Name {get; set;} = string.Empty;

@@ -1,6 +1,6 @@
-namespace HoneyRaesApi.Models.DTOs;
+namespace HoneyRaesAPI.Models.DTOs;
 
-public class ServiceTicketDTO()
+public class ServiceTicketDTO
 {
     public int Id {get; set;}
     public int CustomerId {get; set;}
