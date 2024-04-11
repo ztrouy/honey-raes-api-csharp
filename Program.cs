@@ -111,6 +111,37 @@ app.MapGet("/servicetickets", () =>
     });
 });
 
+app.MapPost("/servicetickets", (ServiceTicket serviceTicket) => 
+{
+    // Get the Customer data to check that the CustomerId for the Service Ticket is valid
+    Customer? customer = customers.FirstOrDefault(customer => customer.Id == serviceTicket.CustomerId);
+
+    // If the client did not provide a valid CustomerId, this is a bad request
+    if (customer == null)
+    {
+        return Results.BadRequest();
+    }
+
+    // Create a new Id (SQL will do this for us like JSON Server did!)
+    serviceTicket.Id = serviceTickets.Max(ticket => ticket.Id) + 1;
+    serviceTickets.Add(serviceTicket);
+
+    // Created returns a 201 Status Code with a link in the headers to where the new resource can be accessed
+    return Results.Created($"/servicetickets/{serviceTicket.Id}", new ServiceTicketDTO
+    {
+        Id = serviceTicket.Id,
+        CustomerId = serviceTicket.CustomerId,
+        Customer = new CustomerDTO
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Address = customer.Address
+        },
+        Description = serviceTicket.Description,
+        Emergency = serviceTicket.Emergency
+    });
+});
+
 app.MapGet("/servicetickets/{id}", (int id) => 
 {
     ServiceTicket? serviceTicket = serviceTickets.FirstOrDefault(ticket => ticket.Id == id);
