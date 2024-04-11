@@ -9,5 +9,5 @@ public class ServiceTicketDTO
     public bool Emergency {get; set;}
     public DateTime? DateCompleted {get; set;}
     public EmployeeDTO? Employee {get; set;}
-    public CustomerDTO Customer {get; set;}
+    public CustomerDTO? Customer {get; set;}
 }
