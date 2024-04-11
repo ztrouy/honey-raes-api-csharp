@@ -150,11 +150,22 @@ app.MapGet("/employees/{id}", (int id) =>
         return Results.NotFound();
     }
 
+    List<ServiceTicket> tickets = serviceTickets.Where(serviceTicket => serviceTicket.EmployeeId == id).ToList();
+
     return Results.Ok(new EmployeeDTO
     {
         Id = employee.Id,
         Name = employee.Name,
-        Specialty = employee.Specialty
+        Specialty = employee.Specialty,
+        ServiceTickets = tickets.Select(ticket => new ServiceTicketDTO
+        {
+            Id = ticket.Id,
+            CustomerId = ticket.CustomerId,
+            EmployeeId = ticket.EmployeeId,
+            Description = ticket.Description,
+            Emergency = ticket.Emergency,
+            DateCompleted = ticket.DateCompleted
+        }).ToList()
     });
 });
 
