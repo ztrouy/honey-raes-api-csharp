@@ -213,6 +213,27 @@ app.MapPut("servicetickets/{id}", (int id, ServiceTicket serviceTicket) =>
     return Results.NoContent();
 });
 
+app.MapPut("servicetickets/{id}", (int id) =>
+{
+    ServiceTicket? ticketToComplete = serviceTickets.FirstOrDefault(ticket => ticket.Id == id);
+    if (ticketToComplete == null)
+    {
+        return Results.NotFound();
+    }
+    if (ticketToComplete.EmployeeId == null)
+    {
+        return Results.BadRequest();
+    }
+    if (ticketToComplete.DateCompleted != null)
+    {
+        return Results.BadRequest();
+    }
+
+    ticketToComplete.DateCompleted = DateTime.Now;
+
+    return Results.NoContent();
+});
+
 app.MapGet("/employees", () => 
 {
     return employees.Select(employee => new EmployeeDTO
