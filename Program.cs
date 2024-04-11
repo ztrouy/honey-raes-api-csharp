@@ -177,6 +177,20 @@ app.MapGet("/servicetickets/{id}", (int id) =>
     });
 });
 
+app.MapDelete("/servicetickets/{id}", (int id) =>
+{
+    ServiceTicket serviceTicketToDelete = serviceTickets.FirstOrDefault(serviceTicket => serviceTicket.Id == id);
+
+    if (serviceTicketToDelete == null)
+    {
+        return Results.BadRequest();
+    }
+
+    serviceTickets.Remove(serviceTicketToDelete);
+
+    return Results.NoContent();
+});
+
 app.MapGet("/employees", () => 
 {
     return employees.Select(employee => new EmployeeDTO
