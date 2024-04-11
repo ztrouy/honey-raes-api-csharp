@@ -8,5 +8,5 @@ public class ServiceTicketDTO
     public string Description {get; set;} = string.Empty;
     public bool Emergency {get; set;}
     public DateTime DateCompleted {get; set;}
-    public Employee? Employee {get; set;}
+    public EmployeeDTO? Employee {get; set;}
 }
