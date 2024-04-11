@@ -121,11 +121,18 @@ app.MapGet("/servicetickets/{id}", (int id) =>
     }
 
     Employee? employee = employees.FirstOrDefault(employee => employee.Id == serviceTicket.EmployeeId);
+    Customer? customer = customers.FirstOrDefault(customer => customer.Id == serviceTicket.CustomerId);
 
     return Results.Ok(new ServiceTicketDTO()
     {
         Id = serviceTicket.Id,
         CustomerId = serviceTicket.CustomerId,
+        Customer = customer == null ? null : new CustomerDTO
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Address = customer.Address
+        },
         EmployeeId = serviceTicket.EmployeeId,
         Employee = employee == null ? null : new EmployeeDTO
         {
