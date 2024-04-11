@@ -213,7 +213,7 @@ app.MapPut("servicetickets/{id}", (int id, ServiceTicket serviceTicket) =>
     return Results.NoContent();
 });
 
-app.MapPut("servicetickets/{id}", (int id) =>
+app.MapPut("servicetickets/{id}/complete", (int id) =>
 {
     ServiceTicket? ticketToComplete = serviceTickets.FirstOrDefault(ticket => ticket.Id == id);
     if (ticketToComplete == null)
@@ -229,7 +229,7 @@ app.MapPut("servicetickets/{id}", (int id) =>
         return Results.BadRequest();
     }
 
-    ticketToComplete.DateCompleted = DateTime.Now;
+    ticketToComplete.DateCompleted = DateTime.Today;
 
     return Results.NoContent();
 });
