@@ -113,7 +113,7 @@ app.MapGet("/servicetickets", () =>
 
 app.MapGet("/servicetickets/{id}", (int id) => 
 {
-    ServiceTicket serviceTicket = serviceTickets.FirstOrDefault(ticket => ticket.Id == id);
+    ServiceTicket? serviceTicket = serviceTickets.FirstOrDefault(ticket => ticket.Id == id);
 
     if (serviceTicket == null)
     {
@@ -143,7 +143,7 @@ app.MapGet("/employees", () =>
 
 app.MapGet("/employees/{id}", (int id) => 
 {
-    Employee employee = employees.FirstOrDefault(employee => employee.Id == id);
+    Employee? employee = employees.FirstOrDefault(employee => employee.Id == id);
 
     if (employee == null)
     {
@@ -181,7 +181,7 @@ app.MapGet("/customers", () =>
 
 app.MapGet("/customers/{id}", (int id) =>
 {
-    Customer customer = customers.FirstOrDefault(customer => customer.Id == id);
+    Customer? customer = customers.FirstOrDefault(customer => customer.Id == id);
 
     if (customer == null)
     {
