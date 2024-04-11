@@ -9,4 +9,5 @@ public class ServiceTicket
     public bool Emergency {get; set;}
     public DateTime? DateCompleted {get; set;}
     public Employee? Employee {get; set;}
+    public Customer Customer {get; set;}
 }
