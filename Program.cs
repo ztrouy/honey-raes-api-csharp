@@ -1,5 +1,9 @@
+using Npgsql;
 using HoneyRaesAPI.Models;
 using HoneyRaesAPI.Models.DTOs;
+
+var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=testenv;Database=HoneyRaes";
+
 List<Customer> customers = new List<Customer>()
 {
     new Customer()
