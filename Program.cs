@@ -335,6 +335,25 @@ app.MapGet("/employees/{id}", (int id) =>
     return employee == null ? Results.NotFound() : Results.Ok(employee);
 });
 
+app.MapPost("employees", (Employee employee) =>
+{
+    using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+    connection.Open();
+    using NpgsqlCommand command = connection.CreateCommand();
+    command.CommandText = @"
+        INSERT INTO Employee (Name, Specialty)
+        VALUES (@name, @specialty)
+        RETURNING Id
+    ";
+    command.Parameters.AddWithValue("@name", employee.Name);
+    command.Parameters.AddWithValue("@specialty", employee.Specialty);
+
+    // The Database will return the new Id for the Employee, add it to the C# Object
+    employee.Id = (int)command.ExecuteScalar();
+
+    return employee;
+});
+
 app.MapGet("/customers", () => 
 {
     return customers.Select(customer => new CustomerDTO
