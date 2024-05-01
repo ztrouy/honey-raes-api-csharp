@@ -335,7 +335,7 @@ app.MapGet("/employees/{id}", (int id) =>
     return employee == null ? Results.NotFound() : Results.Ok(employee);
 });
 
-app.MapPost("employees", (Employee employee) =>
+app.MapPost("/employees", (Employee employee) =>
 {
     using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
     connection.Open();
@@ -352,6 +352,30 @@ app.MapPost("employees", (Employee employee) =>
     employee.Id = (int)command.ExecuteScalar();
 
     return employee;
+});
+
+app.MapPut("/employees/{id}", (int id, Employee employee) =>
+{
+    if (id != employee.Id)
+    {
+        return Results.BadRequest();
+    }
+
+    using NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+    connection.Open();
+    using NpgsqlCommand command = connection.CreateCommand();
+    command.CommandText = @"
+        UPDATE Employee
+        SET Name = @name,
+            Specialty = @specialty
+        WHERE Id = @id
+    ";
+    command.Parameters.AddWithValue("@name", employee.Name);
+    command.Parameters.AddWithValue("@specialty", employee.Specialty);
+    command.Parameters.AddWithValue("@id", id);
+
+    command.ExecuteNonQuery();
+    return Results.NoContent();
 });
 
 app.MapGet("/customers", () => 
